@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/Screenshot 2024-08-05 at 9.47.28 AM.PNG" type="image/png" />
+    <title>CJSPortfolio</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-primary: #8b5cf6;
+            --color-secondary: #ec4899;
+            --color-accent-blue: #38bdf8;
+            --color-background: #0a0a0a;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-background);
+            color: #e5e7eb;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1c1917; }
+        ::-webkit-scrollbar-thumb { background: #4c1d95; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
+        .hero-video-bg { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; object-fit: cover; transform: translate(-50%, -50%); z-index: -1; filter: brightness(0.5); }
+        .glassmorphism { background: rgba(30, 30, 30, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        #cursor-glow { position: fixed; top: 0; left: 0; width: 400px; height: 400px; background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0) 60%); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); transition: transform 0.1s ease-out; z-index: 9999; opacity: 0; animation: fadeIn 1s forwards; }
+        @keyframes fadeIn { to { opacity: 1; } }
+        .animated-text-gradient {
+            background: linear-gradient(90deg, var(--color-secondary), var(--color-primary), var(--color-accent-blue), var(--color-secondary));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: move-gradient 4s linear infinite;
+        }
+        @keyframes move-gradient { to { background-position: -200% center; } }
+        .scroll-reveal { opacity: 0; transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .slide-in-up { transform: translateY(50px); }
+        .slide-in-left { transform: translateX(-50px); }
+        .slide-in-right { transform: translateX(50px); }
+        .scroll-reveal.is-visible { opacity: 1; transform: translate(0, 0); }
+        .certification-stack-container { position: fixed; bottom: 2rem; right: 2rem; z-index: 100; }
+        .certification-trigger { position: relative; z-index: 10; }
+        .certificate-stack { position: absolute; bottom: 100%; right: 0; margin-bottom: 1rem; opacity: 0; transform: translateY(20px) scale(0.8); transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); pointer-events: none; }
+        .certification-stack-container.active .certificate-stack { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+        .certificate-item { position: absolute; bottom: 0; right: 0; width: 340px; height: 240px; background: white; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transform: translateY(0) rotate(0deg) scale(0); transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); cursor: pointer; overflow: hidden; }
+        .certification-stack-container.active .certificate-item:nth-child(1) { transform: translateY(0) rotate(-2deg) scale(1); transition-delay: 0.1s; }
+        .certification-stack-container.active .certificate-item:nth-child(2) { transform: translateY(-50px) rotate(1deg) scale(1); transition-delay: 0.2s; }
+        .certification-stack-container.active .certificate-item:nth-child(3) { transform: translateY(-100px) rotate(-1deg) scale(1); transition-delay: 0.3s; }
+        .certification-stack-container.active .certificate-item:nth-child(4) { transform: translateY(-150px) rotate(2deg) scale(1); transition-delay: 0.4s; }
+        .certification-stack-container.active .certificate-item:nth-child(5) { transform: translateY(-200px) rotate(-1deg) scale(1); transition-delay: 0.5s; }
+        .certification-stack-container.active .certificate-item:nth-child(6) { transform: translateY(-250px) rotate(1deg) scale(1); transition-delay: 0.6s; }
+        .certification-stack-container.active .certificate-item:nth-child(7) { transform: translateY(-300px) rotate(-1deg) scale(1); transition-delay: 0.7s; }
+        .certification-stack-container.active .certificate-item:nth-child(8) { transform: translateY(-350px) rotate(2deg) scale(1); transition-delay: 0.8s; }
+        .certification-stack-container.active .certificate-item:nth-child(9) { transform: translateY(-400px) rotate(-1deg) scale(1); transition-delay: 0.9s; }
+        .certification-stack-container.active .certificate-item:nth-child(10) { transform: translateY(-450px) rotate(1deg) scale(1); transition-delay: 1.0s; }
+        .certification-stack-container.active .certificate-item:nth-child(11) { transform: translateY(-500px) rotate(-1deg) scale(1); transition-delay: 1.1s; }
+        .certificate-item img { width: 100%; height: 100%; object-fit: cover; }
+        .certificate-item:nth-child(1) { z-index: 10; }
+        .certificate-item:nth-child(2) { z-index: 9; }
+        .certificate-item:nth-child(3) { z-index: 8; }
+        .certificate-item:nth-child(4) { z-index: 7; }
+        .certificate-item:nth-child(5) { z-index: 6; }
+        .certificate-item:nth-child(6) { z-index: 5; }
+        .certificate-item:nth-child(7) { z-index: 4; }
+        .certificate-item:nth-child(8) { z-index: 3; }
+        .certificate-item:nth-child(9) { z-index: 2; }
+        .certificate-item:nth-child(10) { z-index: 1; }
+        .certificate-item:nth-child(11) { z-index: 0; }
+        .certificate-item:hover { transform: translateY(-5px) scale(1.1) rotate(0deg) !important; z-index: 10 !important; box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4); }
+        .certificate-description { position: absolute; bottom: 100%; right: 0; margin-bottom: 1rem; background: rgba(30, 30, 30, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1rem; max-width: 300px; opacity: 0; transform: translateY(10px); transition: all 0.3s ease; pointer-events: none; }
+        .certificate-item:hover + .certificate-description, .certificate-description:hover { opacity: 1; transform: translateY(0); pointer-events: all; }
+        .description-text { color: white; font-size: 0.875rem; line-height: 1.4; margin: 0; }
+        .animated-border-card {
+            position: relative;
+            background-color: #18181b;
+            border: 1px solid #3f3f46;
+            overflow: hidden;
+        }
+        .animated-border-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from var(--angle), transparent 0%, var(--color-primary), var(--color-secondary), transparent 20%);
+            transform: translate(-50%, -50%) rotate(var(--angle));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            animation: spin 4s linear infinite;
+        }
+        .animated-border-card:hover::before { opacity: 1; }
+        .animated-border-card .content {
+            position: relative;
+            z-index: 1;
+            background-color: #18181b;
+            padding: 1.5rem;
+            margin: 2px;
+            border-radius: 0.40rem;
+        }
+        @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+        @keyframes spin { to { --angle: 360deg; } }
+        .moving-box { transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .translate-off-left { transform: translateX(-101%); }
+        .translate-off-bottom { transform: translateY(101%); }
+        .group:hover .moving-box { transform: translate(0, 0); }
+        .code-editor { background-color: #1a1a1a; border-radius: 0.75rem; padding: 1.5rem; font-family: 'Courier New', Courier, monospace; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .code-editor .token-key { color: #ec4899; }
+        .code-editor .token-string { color: #a5b4fc; }
+        .blinking-cursor { animation: blink 1s step-end infinite; display: inline-block; width: 10px; height: 1.2rem; background-color: #f0f0f0; margin-left: 2px; vertical-align: middle; }
+        #typing-headline .typing-cursor {
+            display: inline-block;
+            background-color: #e5e7eb;
+            width: 4px;
+            height: 3.5rem;
+            animation: blink 1s step-end infinite;
+            vertical-align: bottom;
+            margin-left: 8px;
+        }
+        @media (min-width: 768px) {
+            #typing-headline .typing-cursor {
+                height: 4rem;
+            }
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        .perspective-container {
+            perspective: 1000px;
+        }
+        #technical-arsenal-card {
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-style: preserve-3d;
+        }
+        #technical-arsenal-card .font-mono {
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .slogan-glow {
+            transition: text-shadow 0.3s ease;
+        }
+        .slogan-glow:hover {
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            padding: 1rem 0;
+        }
+        .ticker-move {
+            display: inline-flex;
+            align-items: center;
+            white-space: nowrap;
+            animation: ticker 40s linear infinite;
+        }
+        .ticker-wrap:hover .ticker-move {
+            animation-play-state: paused;
+        }
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 2rem;
+            transition: transform 0.3s ease;
+        }
+        .ticker-wrap:hover .ticker-item:hover {
+            transform: scale(1.1);
+        }
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        #contact-modal {
+            transition: opacity 0.3s ease;
+        }
+        #contact-modal-content {
+            transition: transform 0.3s ease;
+        }
+        @keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+.animate-marquee {
+  display: inline-flex;
+  animation: marquee 22s linear infinite;
+}
+        .project-card-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            background: #18181b;
+            display: block;
+        }
+        .about-card-heading, .about-card-text { opacity: 0; transition: opacity 0.3s; }
+        .group:hover .about-card-heading, .group:hover .about-card-text { opacity: 1; }
+        .about-hover-alert { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: #fff; background: rgba(139,92,246,0.08); border-radius: 0.5rem; padding: 0.5rem 1.5rem; font-size: 1rem; font-weight: 500; pointer-events: none; opacity: 1; transition: opacity 0.3s; z-index: 2; }
+        .group:hover .about-hover-alert { opacity: 0; }
+    </style>
+</head>
+<body class="text-gray-200">
+
+    <div id="scroll-progress-bar" style="position: fixed; top: 0; left: 0; width: 0%; height: 4px; background: linear-gradient(90deg, #8b5cf6, #ec4899, #38bdf8); z-index: 99999; transition: width 0.2s cubic-bezier(0.4,0,0.2,1);"></div>
+    <div id="cursor-glow"></div>
+    <div class="certification-stack-container">
+        <button class="certification-trigger bg-gradient-to-r from-violet-600 to-pink-600 px-6 py-3 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 hover:shadow-violet-500/50 text-white font-semibold">
+            Certificates
+        </button>
+        
+        <div class="certificate-stack">
+            <div class="certificate-item" data-description="HackMol 6.0 Finalist - National level hackathon recognition.">
+                <img src="images/hackmol_cert.jpeg" alt="HackMol Certificate" />
+            </div>
+            <div class="certificate-item" data-description="NASA Space Apps Challenge - Certificate of Participation.">
+                <img src="images/nasa_cert.jpeg" alt="NASA Certificate" />
+            </div>
+            <div class="certificate-item" data-description="Project 1 - Featured in local newspaper for innovation.">
+                <img src="images/project1_cert.jpeg" alt="Project 1 Certificate" />
+            </div>
+            <div class="certificate-item" data-description="Project 2 - Recognized for outstanding contribution.">
+                <img src="images/project2_cert.jpeg" alt="Project 2 Certificate" />
+            </div>
+            <div class="certificate-item" data-description="Project 3 - Citylife Daily Post feature.">
+                <img src="images/project3_cert.jpeg" alt="Project 3 Certificate" />
+            </div>
+            <div class="certificate-item" data-description="Project 4 - Media coverage for robotics achievement.">
+                <img src="images/project4_cert.jpeg" alt="Project 4 Certificate" />
+            </div>
+            <div class="certificate-item" data-description="Robotics Competition - Winner in robotics event.">
+                <img src="images/robotics_cert.jpeg" alt="Robotics Certificate" />
+            </div>
+            <div class="certificate-item" data-description="Youth Fair - Trophy for innovation and excellence.">
+                <img src="images/Screenshot 2025-07-21 at 12.42.58 AM.png" alt="Youth Fair Trophy" />
+            </div>
+            <div class="certificate-item" data-description="Achievement Certificate - Recognition for outstanding performance.">
+                <img src="images/project submission badge.png" alt="Achievement Certificate" />
+            </div>
+            <div class="certificate-item" data-description="Excellence Award - Certificate of excellence in innovation.">
+                <img src="images/Screenshot 2025-07-21 at 12.21.22 AM.png" alt="Excellence Award" />
+            </div>
+            <div class="certificate-item" data-description="Additional Achievement - Recognition for outstanding contribution.">
+                <img src="images/Screenshot 2025-07-21 at 12.46.08 AM.png" alt="Additional Achievement" />
+            </div>
+        </div>
+        
+        <div class="certificate-description">
+            <p class="description-text"></p>
+        </div>
+    </div>
+
+    <header class="relative min-h-screen overflow-hidden">
+        <video autoplay loop muted playsinline class="hero-video-bg" poster="https://placehold.co/1920x1080/0a0a0a/333333?text=CJS"><source src="https://cdn.pixabay.com/video/2022/09/02/130815-748956455_large.mp4" type="video/mp4"></video>
+        <div class="absolute inset-0 bg-black/60"></div>
+        <nav class="absolute top-0 left-0 right-0 z-20 p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-2xl font-bold tracking-wider animated-text-gradient">CJS</h1>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#projects" class="text-gray-300 hover:text-white transition-colors duration-300">Projects</a>
+                    <a href="#about-me" class="text-gray-300 hover:text-white transition-colors duration-300">About Me</a>
+                    <button class="open-modal-btn bg-gradient-to-r from-violet-600 to-pink-600 hover:from-violet-700 hover:to-pink-700 text-white font-medium py-2 px-5 rounded-lg transition-all duration-300 shadow-lg hover:shadow-violet-500/50">Contact</button>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-white z-30"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg></button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="md:hidden fixed top-0 right-0 h-full w-2/3 max-w-sm bg-stone-950/90 backdrop-blur-lg z-20 transform translate-x-full transition-transform duration-300">
+            <div class="flex justify-between items-center p-6 border-b border-gray-700">
+                <h3 class="text-xl font-bold text-white">Menu</h3>
+                <button id="close-mobile-menu" class="text-gray-400 hover:text-white text-2xl leading-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6 flex flex-col space-y-6">
+                <a href="#projects" class="text-gray-200 hover:text-violet-400 text-lg transition-colors">Projects</a>
+                <a href="#about-me" class="text-gray-200 hover:text-violet-400 text-lg transition-colors">About Me</a>
+                <button class="open-modal-btn bg-gradient-to-r from-violet-600 to-pink-600 text-white font-medium py-3 px-6 rounded-lg text-center transition-all duration-300 hover:scale-105">Contact</button>
+            </div>
+        </div>
+        
+        <div class="relative flex flex-col justify-center items-center min-h-screen text-center px-4 z-10 pt-20 pb-12">
+            <h2 id="typing-headline" class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4 h-24 md:h-32"></h2>
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mb-8">
+                Full-Stack Developer & UI/UX Enthusiast crafting seamless digital experiences. <br> Problem Solving DSA • AI/ML Enthusiast
+            </p>
+            <div class="flex items-center space-x-4 mb-8">
+                <a href="#projects" class="bg-gradient-to-r from-violet-600 to-pink-600 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg hover:shadow-violet-500/50 hover:scale-105">View My Work</a>
+                <button class="open-modal-btn bg-white/10 border border-white/20 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 hover:bg-white/20 hover:scale-105">Get In Touch →</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="py-12 bg-stone-950/50 scroll-reveal slide-in-up">
+            <div class="container mx-auto px-4">
+               
+            </div>
+        </section>
+        
+        <section class="py-12 bg-stone-950/50 scroll-reveal slide-in-up">
+            <div class="container mx-auto px-4">
+                <div class="glassmorphism p-6 rounded-xl">
+                    <div class="mb-4 flex justify-center space-x-4">
+                        <button class="graph-filter-btn active px-3 py-1 rounded-full text-xs font-medium bg-violet-600 text-white" data-filter="all">All</button>
+                        <button class="graph-filter-btn px-3 py-1 rounded-full text-xs font-medium bg-gray-700 text-gray-300 hover:bg-violet-600 hover:text-white transition-colors" data-filter="tech">Tech</button>
+                        <button class="graph-filter-btn px-3 py-1 rounded-full text-xs font-medium bg-gray-700 text-gray-300 hover:bg-violet-600 hover:text-white transition-colors" data-filter="academic">Academic</button>
+                        <button class="graph-filter-btn px-3 py-1 rounded-full text-xs font-medium bg-gray-700 text-gray-300 hover:bg-violet-600 hover:text-white transition-colors" data-filter="projects">Projects</button>
+                    </div>
+                    <div class="progress-graph-container relative h-96">
+                        <canvas id="progressGraph" class="w-full h-full"></canvas>
+                        <div class="graph-tooltip absolute bg-gray-900/95 backdrop-blur-sm text-white px-4 py-3 rounded-lg text-sm pointer-events-none opacity-0 transition-all duration-200 z-50 max-w-xs border border-gray-600 shadow-2xl" style="display: none; backdrop-filter: blur(10px);"></div>
+                        
+                        <!-- Current status overlay -->
+                        <div class="absolute top-4 right-4 bg-black/60 backdrop-blur-sm rounded-lg p-3 text-xs text-white border border-gray-600">
+                            <div class="font-semibold mb-2">Current Status:</div>
+                            <div class="space-y-1 text-gray-300">
+                                <div>• 2nd Year CSE</div>
+                                <div>• DSA</div>
+                                <div>• AI/ML Projects</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-400 mt-2">
+                        <span>Age 10</span>
+                        <span>Age 15</span>
+                        <span>Age 19</span>
+                    </div>
+                    <div class="mt-4 grid grid-cols-2 gap-4 text-xs">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-violet-500 rounded-full"></div>
+                            <span class="text-gray-300">Tech Skills</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-pink-500 rounded-full"></div>
+                            <span class="text-gray-300">Projects</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                            <span class="text-gray-300">Academic</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <span class="text-gray-300">Achievements</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-20 sm:py-24 bg-stone-950/50 scroll-reveal slide-in-up">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h3 class="text-3xl sm:text-4xl font-bold text-white mb-4">My Projects</h3>
+      <p class="text-gray-400 max-w-2xl mx-auto">A selection of my favorite work. Click to learn more.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <a href="https://lnkd.in/eN4Ttwrb" target="_blank" class="animated-border-card rounded-lg">
+        <div class="content text-center">
+          <img src="images/pimg1.jpeg" alt="Social Media Analyst Tool" class="project-card-img mx-auto mb-4" />
+          Social Media Analyst Tool
+        </div>
+      </a>
+
+      <a href="https://lnkd.in/edrQUePW" target="_blank" class="animated-border-card rounded-lg">
+        <div class="content text-center">
+          <img src="images/pimg2.jpeg" alt="Fitness Soul" class="project-card-img mx-auto mb-4" />
+          Fitness Soul
+        </div>
+      </a>
+
+      <a href="https://lnkd.in/eb4DFG6i" target="_blank" class="animated-border-card rounded-lg">
+        <div class="content text-center">
+          <img src="images/pimg3.jpeg" alt="ResQPets" class="project-card-img mx-auto mb-4" />
+          ResQPets
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/posts/charanjot-singh-402412310_iot-arduinouno-alexa-activity-7296814431534002176-dQul" target="_blank" class="animated-border-card rounded-lg">
+        <div class="content text-center">
+          <img src="images/pimg8.png" alt="Home Automation" class="project-card-img mx-auto mb-4" />
+          Home Automation
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/posts/charanjot-singh-402412310_robotics-arduino-automation-activity-7305934483633950722-CdOo" target="_blank" class="animated-border-card rounded-lg">
+        <div class="content text-center">
+          <img src="images/pimg9.png" alt="Object Avoidance Car" class="project-card-img mx-auto mb-4" />
+          Object Avoidance Car
+        </div>
+      </a>
+
+      <a href="#" class="animated-border-card rounded-lg">
+        <div class="content text-center">
+          <img src="images/pimg7.jpg" alt="RC Race Car" class="project-card-img mx-auto mb-4" />
+          RC Race Car
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/posts/charanjot-singh-402412310_nitj-utkansh-robotics-activity-7317503427104636929--ZGn" target="_blank" class="animated-border-card rounded-lg">
+        <div class="content text-center">
+          <img src="images/pimg4.png" alt="Robowar BOT" class="project-card-img mx-auto mb-4" />
+          Robowar BOT
+        </div>
+      </a>
+
+    
+
+      <a href="#" class="animated-border-card rounded-lg">
+        <div class="content text-center">
+          <img src="images/pimg5.jpg" alt="RFID EM-18 Attendance Module" class="project-card-img mx-auto mb-4" />
+          RFID EM-18 Attendance Module
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/posts/charanjot-singh-402412310_at-just-11-years-old-i-observed-ambulances-activity-7227398868986986496-jymb" target="_blank" class="animated-border-card rounded-lg">
+        <div class="content text-center">
+          <img src="images/pimg10.png" alt="Hydraulic Uplifting Hunch Car" class="project-card-img mx-auto mb-4" />
+          Hydraulic Uplifting Hunch Car
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+        <section id="about-me" class="py-20 sm:py-28 scroll-reveal slide-in-left">
+            <div class="container mx-auto px-4 perspective-container">
+                 <div class="text-center mb-16"><h3 class="text-3xl sm:text-4xl font-bold text-white mb-4">About Me</h3><p class="text-gray-400 max-w-2xl mx-auto">My passion lies in building beautiful, functional, and user-centric applications.</p></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                    <div class="group block glassmorphism p-8 rounded-xl overflow-hidden relative">
+                        <span class="about-hover-alert">Hover to reveal</span>
+                        <div class="moving-box translate-off-left">
+                            <h4 class="about-card-heading text-2xl font-bold text-white mb-2">🌐 Full-Stack Development</h4>
+                            <p class="about-card-text text-gray-400">Exploring full-stack development to turn ideas into live products, leveraging component-based architecture and API-first design principles.</p>
+                        </div>
+                    </div>
+                    <div class="group block glassmorphism p-8 rounded-xl overflow-hidden relative">
+                        <span class="about-hover-alert">Hover to reveal</span>
+                        <div class="moving-box translate-off-bottom">
+                            <h4 class="about-card-heading text-2xl font-bold text-white mb-2">🤖 AI/ML & Robotics</h4>
+                            <p class="about-card-text text-gray-400">Passionate about AI/ML and embedding intelligence into real-world systems. Electronics enthusiast who loves building hardware + automation projects.</p>
+                        </div>
+                    </div>
+                    <div class="group block glassmorphism p-8 rounded-xl overflow-hidden relative">
+                        <span class="about-hover-alert">Hover to reveal</span>
+                        <div class="moving-box translate-off-left">
+                            <h4 class="about-card-heading text-2xl font-bold text-white mb-2">💻 DSA & Problem Solving</h4>
+                            <p class="about-card-text text-gray-400">Currently deep-diving into Data Structures & Algorithms, solving complex problems on platforms like LeetCode and Codeforces.</p>
+                        </div>
+                    </div>
+                    <div class="group block glassmorphism p-8 rounded-xl overflow-hidden relative">
+                        <span class="about-hover-alert">Hover to reveal</span>
+                        <div class="moving-box translate-off-bottom">
+                            <h4 class="about-card-heading text-2xl font-bold text-white mb-2">🏆 Achievements & Academics</h4>
+                            <p class="about-card-text text-gray-400">Currently a CSE Sophomore at NIT Jalandhar. Qualified JEE Mains & Advanced. Scored 94.33% in CBSE 12th PCM.Our team was among the Top 10 finalists at HackMol 6.0, one of North India's biggest hackathons, where we competed with some of the best minds in tech. We were also proud to be selected for the national-level Smart India Hackathon (SIH), showcasing our innovation and teamwork on a prestigious platform.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="technical-arsenal-card" class="glassmorphism p-8 rounded-xl">
+                    <h3 class="text-2xl font-bold text-white mb-6 text-center font-mono">Technical Arsenal</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 font-mono">
+                        <div>
+                            <h4 class="text-xl font-semibold text-pink-400 mb-3">Languages & Frameworks</h4>
+                            <p class="text-gray-300">Python, TensorFlow, OpenCV, C++, Firebase, React, Node.js</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-sky-400 mb-3">Hardware & Robotics</h4>
+                            <p class="text-sm text-gray-300">Arduino, MQ-2, HC-05, IR, HC-SR04, PIR, MPU-6050, DHT11, BTS7960, L298N, Relay Modules, Flysky TX/RX</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-violet-400 mb-3">Awards</h4>
+                            <p class="text-gray-300">Inspire Award Winner, DAV University Robotics Champion, Qualified AISQ – IIT Kanpur, 2× National Hackathon Finalist</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="live-itinerary-builder" class="py-20 sm:py-28 scroll-reveal slide-in-right">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl sm:text-4xl font-bold text-white mb-4">Featured Project: Code Breakdown</h3>
+                    <p class="text-gray-400 max-w-2xl mx-auto">A look under the hood of my latest project.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div class="glassmorphism p-8 rounded-xl h-full">
+                        <h4 class="text-xl font-bold mb-4">Problem Statement</h4>
+                        <p class="text-gray-300 text-lg">"Simulate the survival of Charanjot, who took Non-Med to build rockets but ended up building resume.pdf with DSA, 5 Chrome tabs, and caffeine. The goal is not glory — it's attendance, 1 project, and that one recruiter DM."</p>
+                    </div>
+                    <div class="code-editor">
+                        <pre><code id="code-output"></code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+<section class="py-20 sm:py-28 bg-stone-950/50 scroll-reveal slide-in-up">
+  <div class="container mx-auto px-4 text-center">
+    <h3 class="text-2xl font-bold text-white mb-2">MY TECH STACK</h3>
+    <p class="text-gray-400 mb-8">
+      I work with the latest and greatest technologies in the web development world.
+    </p>
+
+    <div class="ticker-wrap glassmorphism rounded-lg overflow-hidden">
+      <div class="ticker-move flex items-center space-x-10 animate-marquee">
+        <div class="ticker-item flex items-center space-x-3">
+          <img src="images/netlify.svg" alt="Netlify" class="w-10 h-10 object-contain" />
+          <span class="text-lg font-medium text-white">Netlify</span>
+        </div>
+
+        <div class="ticker-item flex items-center space-x-3">
+          <img src="images/react.jpg" alt="React" class="w-10 h-10 object-contain" />
+          <span class="text-lg font-medium text-white">React</span>
+        </div>
+
+        <div class="ticker-item flex items-center space-x-3">
+          <img src="images/Tensorflow_logo.svg.png" alt="TensorFlow" class="w-10 h-10 object-contain" />
+          <span class="text-lg font-medium text-white">TensorFlow</span>
+        </div>
+
+        <div class="ticker-item flex items-center space-x-3">
+          <img src="images/html.jpg" alt="HTML" class="w-10 h-10 object-contain" />
+          <span class="text-lg font-medium text-white">HTML</span>
+        </div>
+
+        <div class="ticker-item flex items-center space-x-3">
+          <img src="images/css.png" alt="CSS" class="w-10 h-10 object-contain" />
+          <span class="text-lg font-medium text-white">CSS</span>
+        </div>
+
+        <div class="ticker-item flex items-center space-x-3">
+          <img src="images/js.webp" alt="JavaScript" class="w-10 h-10 object-contain" />
+          <span class="text-lg font-medium text-white">JavaScript</span>
+        </div>
+
+        <div class="ticker-item flex items-center space-x-3">
+          <span class="w-10 h-10 flex items-center justify-center bg-gray-800 text-white rounded-full">CV</span>
+          <span class="text-lg font-medium text-white">OpenCV</span>
+        </div>
+
+        <div class="ticker-item flex items-center space-x-3">
+          <span class="w-10 h-10 flex items-center justify-center bg-blue-700 text-white rounded-full">C++</span>
+          <span class="text-lg font-medium text-white">C++</span>
+        </div>
+
+        <div class="ticker-item flex items-center space-x-3">
+            <img src="images/firebase.jpeg" alt="Firebase" class="w-10 h-10 object-contain" />
+            <span class="text-lg font-medium text-white">Firebase</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+        <section class="py-20 sm:py-28 scroll-reveal slide-in-up">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl sm:text-4xl font-bold text-white mb-4">Education</h3>
+                    <p class="text-gray-400 max-w-2xl mx-auto">My academic journey and achievements.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="glassmorphism p-8 rounded-xl hover:scale-105 transition-transform duration-300">
+                        <div class="flex items-start space-x-6">
+                            <div class="flex-shrink-0">
+                                <img src="images/NITJ_logo.png" alt="NITJ Logo" class="w-16 h-16 rounded-full object-cover" />
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-xl font-bold text-white mb-2">Dr. B.R. Ambedkar National Institute of Technology, Jalandhar</h4>
+                                <p class="text-gray-300 mb-1">Bachelor of Technology - Computer Science Engineering</p>
+                                <p class="text-gray-400 text-sm mb-2">August 2024 - August 2028</p>
+                                <p class="text-violet-400 font-semibold"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glassmorphism p-8 rounded-xl hover:scale-105 transition-transform duration-300">
+                        <div class="flex items-start space-x-6">
+                            <div class="flex-shrink-0">
+                              <img src="images/DAV_logo.png" alt="DAV Logo" class="w-16 h-16 rounded-full object-cover" />
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-xl font-bold text-white mb-2">Dayanand Anglo Vedic (DAV) Public School</h4>
+                                <p class="text-gray-300 mb-1">Senior Secondary Education - Non Medical (PCM)</p>
+                                <p class="text-gray-400 text-sm mb-2">April 2022 - March 2024</p>
+                                <p class="text-violet-400 font-semibold">Grade: 94.33% (CBSE)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <footer class="bg-stone-950 border-t border-stone-800 scroll-reveal slide-in-up"><div class="container mx-auto px-4 py-12"><div class="grid grid-cols-2 md:grid-cols-4 gap-8"><div class="col-span-2 md:col-span-1"><h3 class="text-2xl font-bold text-white mb-2">CJS</h3><p class="text-gray-400 slogan-glow">Powered by ambition and low battery.</p></div><div><h4 class="font-semibold text-white mb-4">Navigate</h4><ul class="space-y-2"><li><a href="#projects" class="text-gray-400 hover:text-violet-400 transition-colors">Projects</a></li><li><a href="#about-me" class="text-gray-400 hover:text-violet-400 transition-colors">About Me</a></li><li><a href="#" class="text-gray-400 hover:text-violet-400 transition-colors">Contact</a></li></ul></div><div><h4 class="font-semibold text-white mb-4">Contact</h4><ul class="space-y-3"><li><a href="tel:7973836594" class="text-gray-400 hover:text-violet-400 transition-colors flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>7973836594</a></li><li class="flex items-center gap-2">
+            <a href="https://github.com/charanjot27" target="_blank" class="text-gray-400 hover:text-white transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.03-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.022A9.564 9.564 0 0112 6.82c.85.004 1.705.115 2.504.337 1.909-1.291 2.747-1.022 2.747-1.022.546 1.378.203 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></path></svg></a>
+            <a href="https://twitter.com/charanjot27" target="_blank" class="text-gray-400 hover:text-blue-400 transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg></a>
+            <a href="https://www.instagram.com/charanjott27/" target="_blank" class="text-gray-400 hover:text-red-500 transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.013-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 016.08 3.692c.636-.247 1.363-.416 2.427.465C9.53 2.013 9.884 2 12.315 2zM12 7a5 5 0 100 10 5 5 0 000-10zm0-2a7 7 0 110 14 7 7 0 010-14zm6.406-11.11a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z" clip-rule="evenodd" /></svg></a>
+            <a href="https://www.linkedin.com/in/charanjot-singh-402412310/" target="_blank" class="text-gray-400 hover:text-blue-500 transition-colors"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+        </div></div></div><div class="mt-12 border-t border-stone-800 pt-8 text-center text-gray-500">
+  <p>&copy; 2025 CJS. All Rights Reserved.
+    <span id="footer-session-timer" style="margin-left:16px; background:rgba(30,30,30,0.7); color:#fff; padding:3px 12px; border-radius:12px; font-size:12px; display:inline-block;">Time on site: <span id="timer-value">00:00</span></span>
+    <span id="footer-page-views-counter" style="margin-left:12px; background:rgba(30,30,30,0.7); color:#fff; padding:3px 12px; border-radius:12px; font-size:12px; display:inline-block;">Visitors: <span id="view-count">...</span></span>
+  </p>
+</div></div></footer>
+
+    <div id="contact-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 hidden opacity-0">
+        <div id="contact-modal-content" class="glassmorphism rounded-2xl w-full max-w-md p-8 transform scale-95">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-white">Get In Touch</h3>
+                <button id="close-modal-btn" class="text-gray-400 hover:text-white text-4xl leading-none">&times;</button>
+            </div>
+            <form id="contact-form">
+                <div class="mb-4">
+                    <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Name</label>
+                    <input type="text" id="name" name="name" required class="w-full bg-stone-800 border border-stone-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-colors">
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                    <input type="email" id="email" name="email" required class="w-full bg-stone-800 border border-stone-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-colors">
+                </div>
+                <div class="mb-6">
+                    <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                    <textarea id="message" name="message" rows="4" required class="w-full bg-stone-800 border border-stone-700 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-violet-500 transition-colors"></textarea>
+                </div>
+                <button id="submit-form-btn" type="submit" class="w-full bg-gradient-to-r from-violet-600 to-pink-600 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 shadow-lg hover:shadow-violet-500/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">Send Message</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const cursorGlow = document.getElementById('cursor-glow');
+            if (cursorGlow) { 
+                window.addEventListener('mousemove', (event) => { 
+                    requestAnimationFrame(() => { 
+                        cursorGlow.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`; 
+                    }); 
+                }); 
+            }
+            const certStackContainer = document.querySelector('.certification-stack-container');
+            const certTrigger = document.querySelector('.certification-trigger');
+            const certificateItems = document.querySelectorAll('.certificate-item');
+            const descriptionText = document.querySelector('.description-text');
+            if (certTrigger && certStackContainer) {
+                certTrigger.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    certStackContainer.classList.toggle('active');
+                });
+                document.addEventListener('click', (event) => {
+                    if (certStackContainer.classList.contains('active') && !certStackContainer.contains(event.target)) {
+                        certStackContainer.classList.remove('active');
+                    }
+                });
+            }
+            certificateItems.forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    const description = item.getAttribute('data-description');
+                    if (descriptionText) {
+                        descriptionText.textContent = description;
+                    }
+                });
+                item.addEventListener('mouseleave', () => {
+                    if (descriptionText) {
+                        descriptionText.textContent = '';
+                    }
+                });
+            });
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeMobileMenu = document.getElementById('close-mobile-menu');
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', (event) => { 
+                    event.stopPropagation(); 
+                    mobileMenu.classList.remove('translate-x-full');
+                });
+                if (closeMobileMenu) {
+                    closeMobileMenu.addEventListener('click', () => {
+                        mobileMenu.classList.add('translate-x-full');
+                    });
+                }
+                document.addEventListener('click', (event) => { 
+                    if (!mobileMenu.classList.contains('translate-x-full') && !mobileMenu.contains(event.target)) { 
+                        mobileMenu.classList.add('translate-x-full'); 
+                    } 
+                });
+            }
+            const typingHeadline = document.getElementById('typing-headline');
+            const words = ["Code. ", "Create. ", "Innovate..."];
+            let wordIndex = 0;
+            let charIndex = 0;
+            function type() {
+                if (wordIndex < words.length) {
+                    if (charIndex < words[wordIndex].length) {
+                        typingHeadline.innerHTML += words[wordIndex].charAt(charIndex);
+                        charIndex++;
+                        setTimeout(type, 120);
+                    } else {
+                        wordIndex++;
+                        charIndex = 0;
+                        setTimeout(type, 500);
+                    }
+                } else {
+                     const cursorSpan = document.createElement('span');
+                     cursorSpan.className = 'typing-cursor';
+                     typingHeadline.appendChild(cursorSpan);
+                }
+            }
+            if(typingHeadline) type();
+            const codeOutput = document.getElementById('code-output');
+            const codeToType = [
+                'const useCharanjotEngine = create(set => ({',
+                '  <span class="token-key">mode</span>: <span class="token-string">"Survival"</span>,',
+                '  <span class="token-key">attendance</span>: <span class="token-string">"borderline"</span>,',
+                '  <span class="token-key">skillsUnlocked</span>: [<span class="token-string">"Jugaad.js"</span>],',
+                '',
+                '  <span class="token-key">attendLecture</span>: () => set(() => ({',
+                '    <span class="token-key">status</span>: <span class="token-string">"Eyes open, mind offline 🧘"</span>',
+                '  })),',
+                '',
+                '  <span class="token-key">grindDSA</span>: () => set(state => ({',
+                '    <span class="token-key">skillsUnlocked</span>: [...state.skillsUnlocked, <span class="token-string">"LeetCode 🧠"</span>]',
+                '  })),',
+                '',
+                '  <span class="token-key">ignoreCG</span>: () => set(() => ({',
+                '    <span class="token-key">mindset</span>: <span class="token-string">"CG is temporary, package is permanent 💰"</span>',
+                '  })),',
+                '',
+                '  <span class="token-key">vibeOnLinkedIn</span>: () => set(state => ({',
+                '    <span class="token-key">skillsUnlocked</span>: [...state.skillsUnlocked, <span class="token-string">"Built !!"</span>]',
+                '  })),',
+                '',
+                '  <span class="token-key">manifestPlacement</span>: () => Math.random() > 0.97 ',
+                '    ? <span class="token-string">"💼 Job unlocked. Mom proud. Wifi upgraded."</span>',
+                '    : <span class="token-string">"📉 Retry. New roadmap unlocked."</span>',
+                '}));'
+            ];
+            function typeCode(lines, element) {
+                let currentLine = 0;
+                element.innerHTML = '';
+                const cursor = document.createElement('span');
+                cursor.className = 'blinking-cursor';
+                function typeLine() {
+                    if (currentLine < lines.length) {
+                        element.innerHTML += lines[currentLine] + '<br>';
+                        currentLine++;
+                        setTimeout(typeLine, 150);
+                    } else {
+                        element.appendChild(cursor);
+                    }
+                }
+                typeCode.hasRun = true;
+                typeLine();
+            }
+            typeCode.hasRun = false;
+            const arsenalCard = document.getElementById('technical-arsenal-card');
+            if (arsenalCard) {
+                arsenalCard.addEventListener('mousemove', (event) => {
+                    const rect = arsenalCard.getBoundingClientRect();
+                    const x = event.clientX - rect.left - rect.width / 2;
+                    const y = event.clientY - rect.top - rect.height / 2;
+                    const rotateY = x * 0.05;
+                    const rotateX = -y * 0.05;
+                    arsenalCard.style.transform = `scale(1.05) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+                arsenalCard.addEventListener('mouseleave', () => {
+                    arsenalCard.style.transform = 'scale(1) rotateX(0) rotateY(0)';
+                });
+            }
+            const copyBtn = document.getElementById('copy-email-btn');
+            if(copyBtn) {
+                copyBtn.addEventListener('click', () => {
+                    const email = 'charanjotsingh2716@gmail.com';
+                    const textarea = document.createElement('textarea');
+                    textarea.value = email;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    const originalIcon = copyBtn.innerHTML;
+                    copyBtn.innerHTML = `<svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalIcon;
+                    }, 2000);
+                });
+            }
+            const modal = document.getElementById('contact-modal');
+            const modalContent = document.getElementById('contact-modal-content');
+            const openModalBtns = document.querySelectorAll('.open-modal-btn');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const contactForm = document.getElementById('contact-form');
+            const submitBtn = document.getElementById('submit-form-btn');
+            function openModal() {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modalContent.classList.remove('scale-95');
+                }, 10);
+            }
+            function closeModal() {
+                modal.classList.add('opacity-0');
+                modalContent.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+            openModalBtns.forEach(btn => btn.addEventListener('click', openModal));
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+            contactForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                submitBtn.innerText = 'Sending...';
+                submitBtn.disabled = true;
+                setTimeout(() => {
+                    submitBtn.innerText = 'Message Sent!';
+                    submitBtn.classList.remove('from-violet-600', 'to-pink-600');
+                    submitBtn.classList.add('bg-green-600');
+                    setTimeout(() => {
+                        closeModal();
+                        contactForm.reset();
+                        submitBtn.innerText = 'Send Message';
+                        submitBtn.disabled = false;
+                        submitBtn.classList.add('from-violet-600', 'to-pink-600');
+                        submitBtn.classList.remove('bg-green-600');
+                    }, 2000);
+                }, 1500);
+            });
+            const observer = new IntersectionObserver((entries, observerInstance) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        if (entry.target.id === 'live-itinerary-builder' && codeOutput && !typeCode.hasRun) {
+                            typeCode(codeToType, codeOutput);
+                        }
+                        observerInstance.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+            const progressGraph = document.getElementById('progressGraph');
+            if (progressGraph) {
+                const canvasContext = progressGraph.getContext('2d');
+                if (!canvasContext) {
+                    return;
+                }
+                const journeyData = {
+                    tech: [
+                        { age: 10, score: 3, label: "Electronics Foundation", details: "Built EM-18 RFID Attendance System • Started exploring electronics and sensors • Participated in school science exhibitions • Self-initiated curiosity into how systems work • Foundation for engineering mindset laid" },
+                        { age: 11, score: 4, label: "RFID System Development", details: "Complete EM-18 RFID Attendance System • Advanced sensor integration • Database management • Circuit design and implementation • Featured in local media for innovation" },
+                        { age: 12, score: 5, label: "Autonomous Robotics", details: "Created Object Avoidance Car using ultrasonic sensors • Built mini robotics and motor-based DIY projects • Gained confidence in hands-on hardware building • Learned basics of logic, circuits, and troubleshooting" },
+                        { age: 13, score: 6, label: "Advanced Circuit Mastery", details: "Multiple robotics and automation projects • Circuit design and PCB development • Sensor integration and calibration • Motor control and power management • Robotics competition winner" },
+                        { age: 14, score: 6, label: "Digital Skills Acquisition", details: "Learned Adobe Photoshop and editing tools • Started learning Digital Marketing (social media, branding) • Dabbled with basic HTML/CSS for web • Improved public speaking & presentation through exhibitions • Started building identity beyond classroom" },
+                        { age: 15, score: 7, label: "Web Development Initiation", details: "Digital marketing + HTML/CSS mastery • Basic web development projects • Digital design and branding skills • Public speaking and presentation expertise • Leadership and academic excellence" },
+                        { age: 16, score: 8, label: "Programming Fundamentals", details: "Focused heavily on JEE Mains + Advanced (self-preparation, no coaching) • Strengthened Math, Physics, and Logical Thinking • C++ programming basics • Algorithmic thinking development • Balanced studies + curiosity, proving discipline + hustle" },
+                        { age: 17, score: 9, label: "Advanced Problem Solving", details: "Cracked JEE, 94.33% in 12th boards • Advanced programming concepts • Complex algorithm implementation • Data structure mastery • Academic excellence with technical skills" },
+                        { age: 18, score: 9, label: "IoT & Smart Systems", details: "Joined NITJ (Dr. B.R. Ambedkar NIT Jalandhar) • Participated in Smart India Hackathon (SIH) - Created Drone Irrigation System using data analytics in agri-tech • Took part in PEC Chandigarh hackathon - Built an API-based auto-question generator • Built Bluetooth RC Car (HC-05 module) • Developed Home Automation System" },
+                        { age: 19, score: 10, label: "Full Stack Excellence", details: "Participated in HackMOL 6.0 at Utkarsh - Reached Top 10 Teams • Took part in Google Solution Challenge - Built Fitness Soul – AI-powered health tracking platform • Learned Data Structures & Algorithms (DSA) - Mastered recursion, trees, graphs, and DP • Started Full Stack Web Development - Built full applications using MERN stack (Mongo, Express, React, Node) • Achieved an SGPA of 8.8, balancing dev work & academics" }
+                    ],
+                    projects: [
+                        { age: 10, score: 3, label: "First Innovation", details: "Built EM-18 RFID Attendance System • Science exhibition projects • Basic electronics experiments • Circuit building and testing • Innovation recognition at school level" },
+                        { age: 11, score: 4, label: "RFID System", details: "Complete attendance tracking system • Database integration • User interface development • System testing and optimization • Media coverage for innovation" },
+                        { age: 12, score: 5, label: "Smart Car Project", details: "Object Avoidance Car using ultrasonic sensors • Autonomous navigation system • Motor control and power management • Sensor calibration and testing • Robotics competition participation" },
+                        { age: 13, score: 6, label: "Robotics Collection", details: "Multiple robotics and automation projects • Advanced circuit design • Sensor integration projects • Motor control systems • Exhibition and competition success" },
+                        { age: 14, score: 6, label: "Digital Portfolio", details: "Adobe Photoshop and editing projects • Digital marketing campaigns • Basic web development • Graphic design portfolio • Creative expression and branding" },
+                        { age: 15, score: 7, label: "Web Development", details: "HTML/CSS websites • Digital marketing tools • Basic web applications • User interface design • Online presence development" },
+                        { age: 16, score: 7, label: "Study Applications", details: "Educational tools and apps • Study aid development • Academic project applications • Problem-solving tools • Learning enhancement systems" },
+                        { age: 17, score: 8, label: "Academic Projects", details: "Advanced academic research • Complex problem-solving projects • Mathematical modeling • Physics experiments • Engineering concept applications" },
+                        { age: 18, score: 9, label: "Hackathon Excellence", details: "Smart India Hackathon (SIH) - Drone Irrigation System using data analytics in agri-tech • PEC Chandigarh hackathon - API-based auto-question generator • Bluetooth RC Car (HC-05 module) • Home Automation System • Multiple hackathon participations" },
+                        { age: 19, score: 10, label: "Professional Applications", details: "Fitness Soul – AI-powered health tracking platform • Social Media Analyst Tool • ResQPets application • Google Solution Challenge participation • Full-stack MERN applications • Multiple professional-grade projects" }
+                    ],
+                    academic: [
+                        { age: 10, score: 3, label: "Academic Foundation", details: "Top performer in primary school • Science exhibition participation • Academic excellence recognition • Strong foundation in core subjects • Leadership qualities development" },
+                        { age: 11, score: 4, label: "Science Excellence", details: "Science Olympiad participation • Academic competitions • Innovation recognition • Technical project development • Academic leadership role" },
+                        { age: 12, score: 5, label: "Leadership Development", details: "School captain responsibilities • Academic excellence • Competition success • Leadership skills development • Academic recognition" },
+                        { age: 13, score: 6, label: "Competition Success", details: "Multiple academic competitions • Exhibition awards • Academic excellence • Technical project recognition • Achievement milestones" },
+                        { age: 14, score: 7, label: "Digital Literacy", details: "Computer science education • Digital skills development • Technology integration • Digital literacy advancement • Modern education adaptation" },
+                        { age: 15, score: 8, label: "Advanced Preparation", details: "Higher secondary preparation • Advanced studies focus • Academic excellence • Subject mastery • Future planning" },
+                        { age: 16, score: 9, label: "JEE Preparation", details: "Intensive JEE Mains & Advanced preparation • Self-study discipline • Mathematical excellence • Physics mastery • Logical thinking development" },
+                        { age: 17, score: 10, label: "JEE Success", details: "Cracked JEE Mains & Advanced • 94.33% in 12th boards • Academic excellence • Engineering college admission • Future career foundation" },
+                        { age: 18, score: 9, label: "University Excellence", details: "Joined NIT Jalandhar (Dr. B.R. Ambedkar NIT Jalandhar) • Prestigious engineering institute • Academic excellence • Technical education • Professional development" },
+                        { age: 19, score: 10, label: "Academic Balance", details: "SGPA 8.8 achievement • Balancing studies with projects • Academic excellence • Professional development • Engineering education success" }
+                    ],
+                    achievements: [
+                        { age: 10, score: 3, label: "First Recognition", details: "School science fair winner • Innovation recognition • Academic excellence • First technical project success • Foundation for future achievements" },
+                        { age: 11, score: 4, label: "Innovation Award", details: "RFID project featured in local media • Innovation recognition • Technical achievement • Media coverage • Community recognition" },
+                        { age: 12, score: 5, label: "Robotics Champion", details: "Robotics competition winner • Technical excellence • Innovation recognition • Competition success • Achievement milestone" },
+                        { age: 13, score: 6, label: "Exhibition Success", details: "Multiple exhibition awards • Technical project recognition • Innovation awards • Academic excellence • Achievement collection" },
+                        { age: 14, score: 6, label: "Digital Recognition", details: "Digital skills and creativity awards • Technology integration • Innovation recognition • Creative excellence • Digital achievement" },
+                        { age: 15, score: 7, label: "Leadership Awards", details: "School leadership recognition • Academic awards • Leadership excellence • Achievement recognition • Personal development" },
+                        { age: 16, score: 8, label: "Academic Excellence", details: "Consistent academic performance • Excellence recognition • Achievement milestones • Academic success • Performance consistency" },
+                        { age: 17, score: 9, label: "JEE Achievement", details: "Qualified JEE Mains & Advanced • Academic excellence • Engineering admission • Achievement milestone • Future success foundation" },
+                        { age: 18, score: 9, label: "Hackathon Success", details: "SIH selection • PEC hackathon finalist • National level recognition • Technical excellence • Innovation achievement" },
+                        { age: 19, score: 10, label: "National Recognition", details: "HackMol 6.0 Top 10 Teams • Google Solution Challenge participation • National level achievements • Technical excellence • Professional recognition" }
+                    ]
+                };
+                let selectedCategory = 'all';
+                let animationProgress = 0;
+                let isAnimating = false;
+                const categoryColors = {
+                    tech: '#8b5cf6',
+                    projects: '#ec4899', 
+                    academic: '#3b82f6',
+                    achievements: '#10b981'
+                };
+                const resizeCanvas = () => {
+                    const container = progressGraph.parentElement;
+                    const rect = container.getBoundingClientRect();
+                    progressGraph.width = rect.width * window.devicePixelRatio;
+                    progressGraph.height = rect.height * window.devicePixelRatio;
+                    progressGraph.style.width = rect.width + 'px';
+                    progressGraph.style.height = rect.height + 'px';
+                    canvasContext.scale(window.devicePixelRatio, window.devicePixelRatio);
+                    setTimeout(() => {
+                        drawGraph();
+                    }, 100);
+                };
+                const drawGrid = () => {
+                    const width = progressGraph.width / window.devicePixelRatio;
+                    const height = progressGraph.height / window.devicePixelRatio;
+                    const padding = 50;
+                    const chartWidth = width - 2 * padding;
+                    const chartHeight = height - 2 * padding;
+                    canvasContext.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+                    canvasContext.lineWidth = 0.5;
+                    canvasContext.setLineDash([]);
+                    for (let i = 0; i <= 9; i++) {
+                        const x = padding + (i * chartWidth / 9);
+                        canvasContext.beginPath();
+                        canvasContext.moveTo(x, padding);
+                        canvasContext.lineTo(x, height - padding);
+                        canvasContext.stroke();
+                    }
+                    for (let i = 0; i <= 10; i++) {
+                        const y = padding + (i * chartHeight / 10);
+                        canvasContext.beginPath();
+                        canvasContext.moveTo(padding, y);
+                        canvasContext.lineTo(width - padding, y);
+                        canvasContext.stroke();
+                    }
+                    canvasContext.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+                    canvasContext.lineWidth = 1;
+                    canvasContext.beginPath();
+                    canvasContext.moveTo(padding, height - padding);
+                    canvasContext.lineTo(width - padding, height - padding);
+                    canvasContext.stroke();
+                    canvasContext.beginPath();
+                    canvasContext.moveTo(padding, padding);
+                    canvasContext.lineTo(padding, height - padding);
+                    canvasContext.stroke();
+                };
+                const drawDataSeries = (data, color, alpha = 1) => {
+                    const width = progressGraph.width / window.devicePixelRatio;
+                    const height = progressGraph.height / window.devicePixelRatio;
+                    const padding = 50;
+                    const chartWidth = width - 2 * padding;
+                    const chartHeight = height - 2 * padding;
+                    const xScale = chartWidth / 9;
+                    const yScale = chartHeight / 10;
+                    canvasContext.strokeStyle = color;
+                    canvasContext.fillStyle = color;
+                    canvasContext.lineWidth = 4;
+                    canvasContext.lineCap = 'round';
+                    canvasContext.lineJoin = 'round';
+                    canvasContext.beginPath();
+                    data.forEach((point, index) => {
+                        const x = padding + (point.age - 10) * xScale;
+                        const y = height - padding - (point.score * animationProgress) * yScale;
+                        if (index === 0) {
+                            canvasContext.moveTo(x, y);
+                        } else {
+                            canvasContext.lineTo(x, y);
+                        }
+                    });
+                    canvasContext.stroke();
+                    data.forEach(point => {
+                        const x = padding + (point.age - 10) * xScale;
+                        const y = height - padding - (point.score * animationProgress) * yScale;
+                        canvasContext.shadowColor = color + '40';
+                        canvasContext.shadowBlur = 12;
+                        canvasContext.shadowOffsetX = 0;
+                        canvasContext.shadowOffsetY = 0;
+                        canvasContext.fillStyle = color + '20';
+                        canvasContext.beginPath();
+                        canvasContext.arc(x, y, 12, 0, 2 * Math.PI);
+                        canvasContext.fill();
+                        canvasContext.shadowColor = 'transparent';
+                        canvasContext.shadowBlur = 0;
+                        canvasContext.shadowOffsetX = 0;
+                        canvasContext.shadowOffsetY = 0;
+                        const gradient = canvasContext.createRadialGradient(x, y, 0, x, y, 8);
+                        gradient.addColorStop(0, color);
+                        gradient.addColorStop(0.7, color + '90');
+                        gradient.addColorStop(1, color + '60');
+                        canvasContext.fillStyle = gradient;
+                        canvasContext.beginPath();
+                        canvasContext.arc(x, y, 8, 0, 2 * Math.PI);
+                        canvasContext.fill();
+                        canvasContext.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                        canvasContext.beginPath();
+                        canvasContext.arc(x, y, 3, 0, 2 * Math.PI);
+                        canvasContext.fill();
+                        canvasContext.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+                        canvasContext.lineWidth = 2;
+                        canvasContext.beginPath();
+                        canvasContext.arc(x, y, 8, 0, 2 * Math.PI);
+                        canvasContext.stroke();
+                    });
+                };
+                const drawLabels = () => {
+                    const width = progressGraph.width / window.devicePixelRatio;
+                    const height = progressGraph.height / window.devicePixelRatio;
+                    const padding = 50;
+                    canvasContext.fillStyle = '#e5e7eb';
+                    canvasContext.font = '12px Inter';
+                    canvasContext.textAlign = 'center';
+                    for (let i = 0; i <= 10; i++) {
+                        const y = height - padding - (i * (height - 2 * padding) / 10);
+                        canvasContext.fillText(i.toString(), padding - 20, y + 4);
+                    }
+                    canvasContext.textAlign = 'center';
+                    for (let i = 0; i <= 9; i++) {
+                        const x = padding + (i * (width - 2 * padding) / 9);
+                        canvasContext.fillText((i + 10).toString(), x, height - padding + 20);
+                    }
+                };
+                const animateGraph = () => {
+                    if (isAnimating) return;
+                    isAnimating = true;
+                    animationProgress = 0;
+                    const animate = () => {
+                        animationProgress += 0.02;
+                        if (animationProgress <= 1) {
+                            drawGraph();
+                            requestAnimationFrame(animate);
+                        } else {
+                            isAnimating = false;
+                            setTimeout(() => {
+                                addDataPointPulse();
+                            }, 500);
+                        }
+                    };
+                    animate();
+                };
+                const addDataPointPulse = () => {
+                    let pulseProgress = 0;
+                    const pulse = () => {
+                        pulseProgress += 0.05;
+                        if (pulseProgress <= 1) {
+                            drawGraph();
+                            const width = progressGraph.width / window.devicePixelRatio;
+                            const height = progressGraph.height / window.devicePixelRatio;
+                            const padding = 50;
+                            const chartWidth = width - 2 * padding;
+                            const chartHeight = height - 2 * padding;
+                            const xScale = chartWidth / 9;
+                            const yScale = chartHeight / 10;
+                            Object.keys(journeyData).forEach(category => {
+                                const data = journeyData[category];
+                                const color = categoryColors[category];
+                                data.forEach(point => {
+                                    const x = padding + (point.age - 10) * xScale;
+                                    const y = height - padding - point.score * yScale;
+                                    const pulseSize = 8 + Math.sin(pulseProgress * Math.PI * 2) * 3;
+                                    canvasContext.strokeStyle = color + '60';
+                                    canvasContext.lineWidth = 2;
+                                    canvasContext.beginPath();
+                                    canvasContext.arc(x, y, pulseSize, 0, 2 * Math.PI);
+                                    canvasContext.stroke();
+                                });
+                            });
+                            requestAnimationFrame(pulse);
+                        }
+                    };
+                    pulse();
+                };
+                const drawGraph = () => {
+                    const width = progressGraph.width / window.devicePixelRatio;
+                    const height = progressGraph.height / window.devicePixelRatio;
+                    canvasContext.clearRect(0, 0, width, height);
+                    drawGrid();
+                    drawLabels();
+                    if (selectedCategory === 'all') {
+                        Object.keys(journeyData).forEach(category => {
+                            drawDataSeries(journeyData[category], categoryColors[category], 0.8);
+                        });
+                    } else if (journeyData[selectedCategory]) {
+                        drawDataSeries(journeyData[selectedCategory], categoryColors[selectedCategory]);
+                    }
+                };
+                const categoryButtons = document.querySelectorAll('.graph-filter-btn');
+                categoryButtons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        categoryButtons.forEach(b => {
+                            b.classList.remove('active', 'bg-violet-600', 'text-white');
+                            b.classList.add('bg-gray-700', 'text-gray-300');
+                        });
+                        btn.classList.add('active', 'bg-violet-600', 'text-white');
+                        btn.classList.remove('bg-gray-700', 'text-gray-300');
+                        selectedCategory = btn.dataset.filter;
+                        animateGraph();
+                    });
+                });
+                resizeCanvas();
+                let resizeTimeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        resizeCanvas();
+                        drawGraph();
+                    }, 250);
+                });
+                const resizeObserver = new ResizeObserver(() => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        resizeCanvas();
+                        drawGraph();
+                    }, 250);
+                });
+                resizeObserver.observe(progressGraph.parentElement);
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !isAnimating) {
+                            setTimeout(animateGraph, 500);
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+                observer.observe(progressGraph);
+                progressGraph.addEventListener('mousemove', (event) => {
+                    const tooltip = document.querySelector('.graph-tooltip');
+                    if (!tooltip) {
+                        return;
+                    }
+                    const rect = progressGraph.getBoundingClientRect();
+                    const x = event.clientX - rect.left;
+                    const y = event.clientY - rect.top;
+                    const width = progressGraph.width / window.devicePixelRatio;
+                    const height = progressGraph.height / window.devicePixelRatio;
+                    const padding = 50;
+                    const chartWidth = width - 2 * padding;
+                    const chartHeight = height - 2 * padding;
+                    const xScale = chartWidth / 9;
+                    const yScale = chartHeight / 10;
+                    let closestPoint = null;
+                    let minDistance = Infinity;
+                    let closestPointX = 0;
+                    let closestPointY = 0;
+                    const dataToCheck = selectedCategory === 'all' ? 
+                        Object.values(journeyData).flat() : 
+                        journeyData[selectedCategory] || [];
+                    dataToCheck.forEach(point => {
+                        const pointX = padding + (point.age - 10) * xScale;
+                        const pointY = height - padding - point.score * yScale;
+                        const distance = Math.sqrt((x - pointX) ** 2 + (y - pointY) ** 2);
+                        if (distance < minDistance && distance < 80) {
+                            minDistance = distance;
+                            closestPoint = point;
+                            closestPointX = pointX;
+                            closestPointY = pointY;
+                        }
+                    });
+                    if (closestPoint) {
+                        tooltip.style.display = 'block';
+                        tooltip.style.opacity = '1';
+                        const graphLeft = rect.left;
+                        const graphTop = rect.top;
+                        const graphWidth = rect.width;
+                        const graphHeight = rect.height;
+                        let finalX = graphLeft + closestPointX + 15;
+                        let finalY = graphTop + closestPointY - 10;
+                        const tooltipWidth = 280;
+                        const tooltipHeight = 180;
+                        if (finalX + tooltipWidth > graphLeft + graphWidth - 20) {
+                            finalX = graphLeft + closestPointX - tooltipWidth - 15;
+                        }
+                        if (finalX < graphLeft + 20) {
+                            finalX = graphLeft + closestPointX + 15;
+                        }
+                        if (finalY < graphTop + 20) {
+                            finalY = graphTop + closestPointY + 15;
+                        }
+                        if (finalY + tooltipHeight > graphTop + graphHeight - 20) {
+                            finalY = graphTop + closestPointY - tooltipHeight - 15;
+                        }
+                        tooltip.style.left = finalX + 'px';
+                        tooltip.style.top = finalY + 'px';
+                        const details = closestPoint.details.split('•').map(detail => detail.trim()).filter(detail => detail);
+                        const detailsList = details.map(detail => `<li class="text-xs text-gray-300 mb-1">• ${detail}</li>`).join('');
+                        tooltip.innerHTML = `
+                            <div class="font-bold text-white mb-2 border-b border-gray-600 pb-1">Age ${closestPoint.age}: ${closestPoint.label}</div>
+                            <ul class="space-y-1">
+                                ${detailsList}
+                            </ul>
+                        `;
+                    } else {
+                        tooltip.style.opacity = '0';
+                        setTimeout(() => {
+                            tooltip.style.display = 'none';
+                        }, 200);
+                    }
+                });
+                progressGraph.addEventListener('mouseleave', () => {
+                    const tooltip = document.querySelector('.graph-tooltip');
+                    tooltip.style.opacity = '0';
+                    setTimeout(() => {
+                        tooltip.style.display = 'none';
+                    }, 200);
+                });
+                progressGraph.addEventListener('mouseenter', () => {});
+                progressGraph.addEventListener('click', (event) => {
+                    const tooltip = document.querySelector('.graph-tooltip');
+                    if (!tooltip) {
+                        return;
+                    }
+                    const rect = progressGraph.getBoundingClientRect();
+                    const x = event.clientX - rect.left;
+                    const y = event.clientY - rect.top;
+                    const width = progressGraph.width / window.devicePixelRatio;
+                    const height = progressGraph.height / window.devicePixelRatio;
+                    const padding = 50;
+                    const chartWidth = width - 2 * padding;
+                    const chartHeight = height - 2 * padding;
+                    const xScale = chartWidth / 9;
+                    const yScale = chartHeight / 10;
+                    let closestPoint = null;
+                    let minDistance = Infinity;
+                    let closestPointX = 0;
+                    let closestPointY = 0;
+                    const dataToCheck = selectedCategory === 'all' ? 
+                        Object.values(journeyData).flat() : 
+                        journeyData[selectedCategory] || [];
+                    dataToCheck.forEach(point => {
+                        const pointX = padding + (point.age - 10) * xScale;
+                        const pointY = height - padding - point.score * yScale;
+                        const distance = Math.sqrt((x - pointX) ** 2 + (y - pointY) ** 2);
+                        if (distance < minDistance && distance < 80) {
+                            minDistance = distance;
+                            closestPoint = point;
+                            closestPointX = pointX;
+                            closestPointY = pointY;
+                        }
+                    });
+                    if (closestPoint) {
+                        tooltip.style.display = 'block';
+                        tooltip.style.opacity = '1';
+                        const graphLeft = rect.left;
+                        const graphTop = rect.top;
+                        const graphWidth = rect.width;
+                        const graphHeight = rect.height;
+                        let finalX = graphLeft + closestPointX + 15;
+                        let finalY = graphTop + closestPointY - 10;
+                        const tooltipWidth = 280;
+                        const tooltipHeight = 180;
+                        if (finalX + tooltipWidth > graphLeft + graphWidth - 20) {
+                            finalX = graphLeft + closestPointX - tooltipWidth - 15;
+                        }
+                        if (finalX < graphLeft + 20) {
+                            finalX = graphLeft + closestPointX + 15;
+                        }
+                        if (finalY < graphTop + 20) {
+                            finalY = graphTop + closestPointY + 15;
+                        }
+                        if (finalY + tooltipHeight > graphTop + graphHeight - 20) {
+                            finalY = graphTop + closestPointY - tooltipHeight - 15;
+                        }
+                        tooltip.style.left = finalX + 'px';
+                        tooltip.style.top = finalY + 'px';
+                        const details = closestPoint.details.split('•').map(detail => detail.trim()).filter(detail => detail);
+                        const detailsList = details.map(detail => `<li class="text-xs text-gray-300 mb-1">• ${detail}</li>`).join('');
+                        tooltip.innerHTML = `
+                            <div class="font-bold text-white mb-2 border-b border-gray-600 pb-1">Age ${closestPoint.age}: ${closestPoint.label}</div>
+                            <ul class="space-y-1">
+                                ${detailsList}
+                            </ul>
+                        `;
+                    }
+                });
+            }
+        });
+    </script>
+    <script>
+        window.addEventListener('scroll', () => {
+            const scrollBar = document.getElementById('scroll-progress-bar');
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (scrollTop / docHeight) * 100;
+            scrollBar.style.width = scrolled + '%';
+        });
+    </script>
+    <script>
+    (function() {
+      const timerValue = document.getElementById('timer-value');
+      let seconds = 0;
+      function updateTimer() {
+        seconds++;
+        const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
+        const ss = String(seconds % 60).padStart(2, '0');
+        timerValue.textContent = `${mm}:${ss}`;
+      }
+      setInterval(updateTimer, 1000);
+    })();
+    const counterKey = 'cjs-portfolio-local-test';
+    fetch(`https://api.countapi.xyz/hit/${counterKey}/visits`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('view-count').textContent = data.value;
+      })
+      .catch(() => {
+        document.getElementById('view-count').textContent = 'N/A';
+      });
+    </script>
+</body>
+</html>
